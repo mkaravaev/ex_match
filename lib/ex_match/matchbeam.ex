@@ -3,7 +3,7 @@ defmodule ExMatch.Matchbeam do
 
   @impl ExMatch.MatchHandler
   def init() do
-    :ok
+    {__MODULE__, %{}}
   end
 
   @impl ExMatch.MatchHandler
