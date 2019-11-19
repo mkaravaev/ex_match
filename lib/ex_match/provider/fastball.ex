@@ -2,6 +2,7 @@ defmodule ExMatch.Provider.Fastball do
   @behaviour ExMatch.Provider
 
   alias ExMatch.HTTPClient
+  alias ExMatch.TimeHelper
 
   @config Application.get_env(:ex_match, :providers)[:fastball]
   @url "#{@config[:base_url]}/#{@config[:path]}"
@@ -15,7 +16,9 @@ defmodule ExMatch.Provider.Fastball do
   def process(%{last_checked_at: checked_time} = params) do
     case HTTPClient.call(@url, params) do
       {:ok, _body} ->
-        # ExMatch.save!(body)
+        # body
+        # |> ExMatch.save()
+
         {__MODULE__, %{last_checked_at: time_now()}}
 
       {:error, _} ->
@@ -31,5 +34,5 @@ defmodule ExMatch.Provider.Fastball do
     ExMatch.get_last_checked_at(provider: "fastball")
   end
 
-  defp time_now, do: DateTime.utc_now |> DateTime.to_unix
+  defp time_now, do: TimeHelper.time_now_unix
 end

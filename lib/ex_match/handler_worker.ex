@@ -1,7 +1,7 @@
 defmodule ExMatch.HandlerWorker do
   use GenServer
 
-  @repeat_time 30 #seconds
+  @repeat_time 30 * 1000 #seconds
 
   def start_link(init) do
     GenServer.start_link(__MODULE__, init)

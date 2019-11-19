@@ -3,18 +3,9 @@ defmodule ExMatch do
   Documentation for ExMatch.
   """
 
-  @doc """
-  Hello world.
+  def get_last_checked_at(_), do: 123213123
 
-  ## Examples
+  def save(matches) when is_list(matches) do
 
-      iex> ExMatch.hello()
-      :world
-
-  """
-  def hello do
-    :world
   end
-
-  def get_last_checked_at(_), do: :ok
 end

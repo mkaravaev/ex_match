@@ -5,11 +5,13 @@ defmodule ExMatch.Application do
 
   use Application
 
+  alias ExMatch.Provider.{Matchbeam, Fastball}
+
   def start(_type, _args) do
     # List all child processes to be supervised
     children = [
-      Supervisor.child_spec({ExMatch.HandlerWorker, ExMatch.Matchbeam}, id: ExMatch.Matchbeam),
-      Supervisor.child_spec({ExMatch.HandlerWorker, ExMatch.Fastball}, id: ExMatch.Fastball)
+      Supervisor.child_spec({ExMatch.HandlerWorker, Matchbeam}, id: :worker_1),
+      Supervisor.child_spec({ExMatch.HandlerWorker, Fastball}, id: :worker_2)
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
