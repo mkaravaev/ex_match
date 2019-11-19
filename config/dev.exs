@@ -9,3 +9,9 @@ config :ex_match, :providers,
     base_url: "http://forzaassignment.forzafootball.com:8080",
     path: "feed/matchbeam"
   ]
+
+config :ex_match, ExMatch.Repo,
+  database: "ex_match_dev",
+  username: "postgres",
+  password: "postgres",
+  hostname: "localhost"

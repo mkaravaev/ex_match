@@ -25,7 +25,7 @@ defmodule ExMatch.MixProject do
     [
       {:httpoison, "~> 1.6"},
       {:jason, "~> 1.1"},
-      {:ecto, "~> 3.0"},
+      {:ecto_sql, "~> 3.0"},
       {:postgrex, ">= 0.0.0"},
       {:bypass, "~> 1.0", only: :test}
     ]

@@ -10,6 +10,7 @@ defmodule ExMatch.Application do
   def start(_type, _args) do
     # List all child processes to be supervised
     children = [
+      ExMatch.Repo,
       Supervisor.child_spec({ExMatch.HandlerWorker, Matchbeam}, id: :worker_1),
       Supervisor.child_spec({ExMatch.HandlerWorker, Fastball}, id: :worker_2)
     ]
