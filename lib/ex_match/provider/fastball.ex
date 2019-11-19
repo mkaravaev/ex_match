@@ -15,11 +15,11 @@ defmodule ExMatch.Provider.Fastball do
   @impl true
   def process(%{last_checked_at: checked_time} = params) do
     case HTTPClient.call(@url, params) do
-      {:ok, _body} ->
-        # body
-        # |> ExMatch.save()
+      {:ok, body} ->
+        time_now = time_now()
+        save(body)
 
-        {__MODULE__, %{last_checked_at: time_now()}}
+        {__MODULE__, %{last_checked_at: time_now}}
 
       {:error, _} ->
         {__MODULE__, %{last_checked_at: checked_time}}
@@ -28,6 +28,14 @@ defmodule ExMatch.Provider.Fastball do
 
   @impl true
   def after_process(_) do
+  end
+
+  def save(params) do
+    for p <- params do
+      p
+      |> Map.put("provider", "fastball")
+      |> ExMatch.save
+    end
   end
 
   defp get_last_checked_at do

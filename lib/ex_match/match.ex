@@ -12,7 +12,7 @@ defmodule ExMatch.Match do
     timestamps()
   end
 
-  @allowed_fields ~w(home_team away_team kickoff_at created_at)
+  @allowed_fields ~w(home_team away_team kickoff_at created_at)a
   @required_fields @allowed_fields
 
   def changeset(struct, params) do
