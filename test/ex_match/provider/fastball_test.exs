@@ -1,8 +1,10 @@
 defmodule ExMatch.Provider.FastballTest do
-  use ExUnit.Case
+  use ExMatch.DefaultCase
   use FastBallBypass
 
   alias ExMatch.TimeHelper
+  alias ExMatch.Repo
+  alias ExMatch.Match
 
   @moduletag :focus
 
@@ -12,6 +14,7 @@ defmodule ExMatch.Provider.FastballTest do
     test "should fetch and save match from resource" do
       {_mod, time_now} = ExMatch.Provider.Fastball.process(%{last_checked_at: 131231})
       assert time_now.last_checked_at == TimeHelper.time_now_unix
+      assert Repo.count(Match) == 1
     end
   end
 

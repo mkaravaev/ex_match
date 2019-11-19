@@ -14,4 +14,6 @@ config :ex_match, ExMatch.Repo,
   database: "ex_match_test",
   username: "postgres",
   password: "postgres",
-  hostname: "localhost"
+  hostname: "localhost",
+  pool: Ecto.Adapters.SQL.Sandbox
+
