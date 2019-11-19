@@ -15,4 +15,6 @@ defmodule ExMatch do
   def hello do
     :world
   end
+
+  def get_last_checked_at(_), do: :ok
 end

@@ -27,7 +27,7 @@ defmodule ExMatch.Fastball do
   end
 
   defp call(last_checked_at) do
-    HTTPoison.get!(@config.url, [], params: %{last_checked_at: last_checked_at})
+    HTTPoison.get!(@config[:base_url], [], params: %{last_checked_at: last_checked_at})
   end
 
   defp time_now, do: DateTime.utc_now |> DateTime.to_unix
