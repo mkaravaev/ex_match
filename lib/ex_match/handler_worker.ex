@@ -1,15 +1,15 @@
 defmodule ExMatch.HandlerWorker do
   use GenServer
 
-  @repeat_time 30 * 1000 #seconds
+  @repeat_time 30_000 #30 seconds
 
-  def start_link(init) do
-    GenServer.start_link(__MODULE__, init)
+  def start_link(init_mod) do
+    GenServer.start_link(__MODULE__, init_mod, name: init_mod)
   end
 
   @impl true
-  def init(mod) do
-    state = mod.init()
+  def init(init_mod) do
+    state = init_mod.init()
 
     repeating_job()
 
