@@ -10,9 +10,9 @@ defmodule ExMatch.Repo.Migrations.CreateMatches do
     create table(:matches) do
       add :home_team, :citext
       add :away_team, :citext
-      add :kickoff_at, :integer
+      add :kickoff_at, :utc_datetime
       add :provider, :string
-      add :created_at, :utc_datetime
+      add :created_at, :integer
 
       timestamps()
     end

@@ -6,7 +6,7 @@ config :ex_match, :providers,
     path: "feed/fastball"
   ],
   matchbeam: [
-    base_url:  "http://localhost:4080",
+    base_url:  "http://localhost:4082",
     path: "feed/matchbeam"
   ]
 

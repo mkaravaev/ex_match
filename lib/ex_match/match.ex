@@ -5,14 +5,14 @@ defmodule ExMatch.Match do
   schema "matches" do
     field :home_team, :string
     field :away_team, :string
-    field :kickoff_at, :integer
+    field :kickoff_at, :utc_datetime
     field :provider, :string
-    field :created_at, :utc_datetime
+    field :created_at, :integer
 
     timestamps()
   end
 
-  @allowed_fields ~w(home_team away_team kickoff_at created_at)a
+  @allowed_fields ~w(home_team away_team kickoff_at created_at provider)a
   @required_fields @allowed_fields
 
   def changeset(struct, params) do
