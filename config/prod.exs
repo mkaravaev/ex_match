@@ -12,6 +12,7 @@ config :ex_match, :providers,
 
 config :ex_match, ExMatch.Repo,
   database: "ex_match_prod",
-  username: "",
-  password: "",
-  hostname: ""
+  username: "postgres",
+  password: "postgres",
+  hostname: "localhost",
+  pool_size: 10

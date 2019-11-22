@@ -30,6 +30,11 @@ defmodule ExMatch.Provider.Fastball do
     end
   end
 
+# NOTICE
+# In case we don't want the same matches occurred in our DB
+# much better to cache already recorded matches to ETS
+# and checked whenever they already persist or not.
+# Now we relay on Ecto's unique_constraint checkings.
   def save(params) do
     for p <- params do
       p
