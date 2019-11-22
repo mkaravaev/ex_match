@@ -3,7 +3,7 @@ defmodule FastBallBypass do
   defmacro __using__(_) do
     quote location: :keep do
 
-      def setup_bypass(context) do
+      def setup_fastball_bypass(context) do
         bypass = Bypass.open(port: FastBallBypass.get_port())
         Bypass.expect(bypass, &handle_request(&1, context))
         %{bypass: bypass}
@@ -17,15 +17,17 @@ defmodule FastBallBypass do
         Plug.Conn.resp(conn, 400, "")
       end
 
-      def handle_request(%{method: "GET"} = conn, _context) do
-        resp_body = [
-          %{
-            "home_team" => "Arsenal",
-            "away_team" => "Chelsea FC",
-            "kickoff_at" => 1543741200,
-            "created_at" => "2018-12-19T09:00:00Z"
-          }
-        ] |> Jason.encode!
+      def handle_request(%{method: "GET", path_info: ["feed", "fastball"]} = conn, _context) do
+        resp_body = %{
+          "matches" => [
+            %{
+              "home_team" => "Manchester United",
+              "away_team" => "Amkar FC",
+              "kickoff_at" => "2019-12-19T09:00:00Z",
+              "created_at" => 1543751200
+            }
+          ]
+        } |> Jason.encode!
 
         Plug.Conn.resp(conn, 200, resp_body)
       end

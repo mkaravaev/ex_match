@@ -3,7 +3,7 @@ defmodule MatchBeamBypass do
   defmacro __using__(_) do
     quote location: :keep do
 
-      def setup_bypass(context) do
+      def setup_matchbeam_bypass(context) do
         bypass = Bypass.open(port: MatchBeamBypass.get_port())
 
         Bypass.expect(bypass, &handle_request(&1, context))
@@ -19,14 +19,16 @@ defmodule MatchBeamBypass do
         Plug.Conn.resp(conn, 400)
       end
 
-      def handle_request(%{method: "GET"} = conn, context) do
-        resp_body = [
-          %{
-            "teams" => "Arsenal - Chelsea FC",
-            "kickoff_at" => 1543741200,
-            "created_at" => "2018-12-19T09:00:00Z"
-          }
-        ] |> Jason.encode!
+      def handle_request(%{method: "GET", path_info: ["feed", "matchbeam"]} = conn, context) do
+        resp_body = %{
+          "matches" => [
+            %{
+              "teams" => "Arsenal - Chelsea FC",
+              "kickoff_at" => "2018-12-19T09:00:00Z",
+              "created_at" => 1543741200
+            }
+          ]
+        } |> Jason.encode!
 
         Plug.Conn.resp(conn, 200, resp_body)
       end
