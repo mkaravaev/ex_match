@@ -8,8 +8,14 @@ defmodule ExMatch.Application do
   def start(_type, _args) do
     children = [
       {ExMatch.Repo, []},
-      {ExMatch.MatchHandlersSupervisor, [Matchbeam, Fastball]}
     ]
+
+    children =
+      if Mix.env == :test do
+        children
+      else
+        children ++ [{ExMatch.MatchHandlersSupervisor, [Matchbeam, Fastball]}]
+      end
 
     opts = [strategy: :one_for_one, name: ExMatch.Supervisor]
 

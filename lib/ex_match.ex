@@ -3,12 +3,20 @@ defmodule ExMatch do
   Documentation for ExMatch.
   """
 
+  import Ecto.Query
+
   alias ExMatch.Match
   alias ExMatch.Repo
 
-  def get_last_checked_at(_), do: 123213123
+  def get_last_match_for(provider: provider) do
+    query = 
+      from m in Match,
+      where: m.provider == ^provider
 
-  def save(params) do
+    Repo.last(query)
+  end
+
+  def save_match(params) do
     %Match{}
     |> Match.changeset(params)
     |> Repo.insert
