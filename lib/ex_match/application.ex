@@ -11,7 +11,7 @@ defmodule ExMatch.Application do
     ]
 
     children =
-      if Mix.env == :test do
+      if Application.get_env(:ex_match, :environment) ==  :test do
         children
       else
         children ++ [{ExMatch.MatchHandlersSupervisor, [Matchbeam, Fastball]}]

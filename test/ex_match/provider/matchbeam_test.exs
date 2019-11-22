@@ -2,9 +2,6 @@ defmodule ExMatch.Provider.MatchbeamTest do
   use ExMatch.DefaultCase
   use MatchBeamBypass
 
-  import ExMatch.Factory, only: [insert_fastball_match: 1]
-
-  alias ExMatch.TimeHelper
   alias ExMatch.Repo
   alias ExMatch.Match
   alias ExMatch.Provider.Matchbeam

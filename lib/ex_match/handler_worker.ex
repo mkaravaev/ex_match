@@ -25,7 +25,7 @@ defmodule ExMatch.HandlerWorker do
   def init(init_mod) do
     state = init_mod.init()
 
-    unless Mix.env == :test do
+    unless evironment_is?(:test) do
       make_scheduled_call(1)
     end
 
@@ -41,11 +41,15 @@ defmodule ExMatch.HandlerWorker do
   def handle_info(:get_matches, state) do
     process(state)
 
-    unless Mix.env == :test do
+    unless evironment_is?(:test) do
       make_scheduled_call()
     end
 
     {:noreply, state}
+  end
+
+  defp evironment_is?(env) do
+    Application.get_env(:ex_match, :environment) == env
   end
 
 end

@@ -6,7 +6,7 @@ defmodule ExMatch.Provider.Fastball do
   alias ExMatch.Match
 
   @config Application.get_env(:ex_match, :providers)[:fastball]
-  @url "#{@config[:base_url]}/#{@config[:path]}"
+  @call_url "#{@config[:base_url]}/#{@config[:path]}"
 
   @impl true
   def init() do
@@ -18,7 +18,7 @@ defmodule ExMatch.Provider.Fastball do
 
   @impl true
   def process(%{last_checked_at: checked_time} = params) do
-    case HTTPClient.call(@url, params) do
+    case HTTPClient.call(@call_url, params) do
       {:ok, body} ->
         time_now = time_now()
         save(body["matches"])
@@ -30,11 +30,7 @@ defmodule ExMatch.Provider.Fastball do
     end
   end
 
-  @impl true
-  def after_process(_) do
-  end
-
-  defp save(params) do
+  def save(params) do
     for p <- params do
       p
       |> Map.put("provider", "fastball")
@@ -46,7 +42,7 @@ defmodule ExMatch.Provider.Fastball do
     case ExMatch.get_last_match_for(provider: "fastball") do
       nil -> nil
 
-      %Match{} = match -> 
+      %Match{} = match ->
         TimeHelper.naive_to_unix(match.inserted_at)
     end
   end

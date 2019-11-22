@@ -4,16 +4,16 @@ defmodule ExMatch.Provider.Matchbeam do
   alias ExMatch.HTTPClient
 
   @config Application.get_env(:ex_match, :providers)[:matchbeam]
-  @url "#{@config[:base_url]}/#{@config[:path]}"
+  @call_url "#{@config[:base_url]}/#{@config[:path]}"
 
   @impl true
   def init() do
-    {__MODULE__, %{}}
+    {__MODULE__, empty_state()}
   end
 
   @impl true
   def process(_) do
-    case HTTPClient.call(@url) do
+    case HTTPClient.call(@call_url) do
       {:ok, body} ->
         save(body["matches"])
 
@@ -24,11 +24,8 @@ defmodule ExMatch.Provider.Matchbeam do
     end
   end
 
-  @impl true
-  def after_process(_) do
-  end
 
-  defp save(params) do
+  def save(params) do
     for p <- params do
       p
       |> serialize()
@@ -36,17 +33,21 @@ defmodule ExMatch.Provider.Matchbeam do
     end
   end
 
+  defp empty_state do
+    %{}
+  end
+
   defp serialize(params) do
     params
     |> split_teams()
-    |> set_provider
+    |> set_provider()
   end
 
   defp split_teams(%{"teams" => teams} = params) do
     [home_team, away_team] = String.split(teams, " - ")
 
     Map.merge(params, %{
-      "home_team" => home_team, 
+      "home_team" => home_team,
       "away_team" => away_team
     })
   end

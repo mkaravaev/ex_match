@@ -1,5 +1,7 @@
 defmodule ExMatch.Provider do
-  @callback init() :: {module(), Map.t()}
-  @callback process(any) :: :ok
-  @callback after_process(any) :: :ok
+  @type opts :: map()
+  @type state :: {module(), opts()}
+
+  @callback init() :: state
+  @callback process(opts) :: state
 end

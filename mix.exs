@@ -8,6 +8,7 @@ defmodule ExMatch.MixProject do
       elixir: "~> 1.8",
       elixirc_paths: elixirc_paths(Mix.env),
       start_permanent: Mix.env() == :prod,
+      dialyzer: [plt_add_deps: :transitive],
       deps: deps()
     ]
   end
@@ -27,7 +28,8 @@ defmodule ExMatch.MixProject do
       {:jason, "~> 1.1"},
       {:ecto_sql, "~> 3.0"},
       {:postgrex, ">= 0.0.0"},
-      {:bypass, "~> 1.0", only: :test}
+      {:bypass, "~> 1.0", only: :test},
+      {:dialyxir, "~> 1.0.0-rc.7", only: [:dev], runtime: false}
     ]
   end
 
